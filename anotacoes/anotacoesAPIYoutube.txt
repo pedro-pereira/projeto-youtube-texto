@@ -1,0 +1,56 @@
+https://www.youtube.com/watch?v=tmp14tVcomw
+
+
+tmp14tVcomw
+
+Usuário OAuth
+524151505997-pp0arm42racksr1mots0udfrjm00ao8a.apps.googleusercontent.com
+
+Chave OAuth
+VCNS1i0H5wuPE3z-s1FsS-CX
+
+
+
+
+https://www.googleapis.com/youtube/v3/captions/tmp14tVcomw?key=
+
+
+Site muito útil
+
+http://truelogic.org/wordpress/2017/07/04/13-youtube-data-api-captions-download-function/
+
+https://developers.google.com/api-client-library/javascript/samples/samples#authorizing-and-making-authorized-requests
+
+https://developers.google.com/youtube/v3/guides/implementation/captions
+
+
+https://www.kelvinsantiago.com.br/buscando-dados-de-video-na-api-v3-do-youtube-pelo-id-em-java/
+	
+https://medium.com/@pablo127/google-api-authentication-with-oauth-2-on-the-example-of-gmail-a103c897fd98
+
+https://coredump.pt/questions/46960390/authenticate-to-youtube-in-java-using-mobile-api-for-authentication
+
+
+https://www.ibm.com/developerworks/br/library/se-oauthjavapt3/index.html
+http://highaltitudedev.blogspot.com/2013/10/google-oauth2-with-jettyservlets.html
+https://stackoverflow.com/questions/10835365/authenticate-programmatically-to-google-with-oauth2
+
+Ajudou sobre o callback URL
+https://stackoverflow.com/questions/44728814/could-not-complete-oauth2-login
+
+Ajuda sobre escopos:
+https://developers.google.com/identity/protocols/googlescopes?hl=pt_BR#youtubev3
+
+Administrador do meu console:
+https://console.developers.google.com/apis/credentials?project=projetoyoutubeemtexto
+
+Teste SUCESSO:
+https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.captions.list?part=snippet&videoId=tmp14tVcomw&_h=5&
+https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.captions.download?id=BK2MDNjzbXLq7srvsYfhXGd8iVkiZy_MWk2iYmsbp_s%253D&_h=2&
+
+Ajudou a resolver problema na autenticacao
+https://stackoverflow.com/questions/43162884/invalid-parameter-value-for-redirect-uri-missing-scheme-auth-google-auth-code
+https://stackoverflow.com/questions/11485271/google-oauth-2-authorization-error-redirect-uri-mismatch
+
+
+

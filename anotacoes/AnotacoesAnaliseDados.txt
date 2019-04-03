@@ -1,0 +1,37 @@
+Minha credencial: 
+
+Chaves de API
+AIzaSyCji3zGouWxPJliYCJJn2gEsAnVnxU4USA
+
+Na API GOOGLE
+https://developers.google.com/youtube/v3/docs/captions/download
+
+Primeiro video que me ajudou
+https://www.hongkiat.com/blog/three-ways-transcribe-youtube-videos/
+https://www.youtube.com/watch?v=AcUauzCn7RE
+https://stackoverflow.com/questions/9611397/how-to-extract-closed-caption-transcript-from-youtube-video
+
+
+POssivel site que faz o servoço:
+https://sourceforge.net/projects/google2srt/
+
+https://github.com/jdepoix/youtube-transcript-api
+
+http://downsub.com/
+
+
+Transcricao dinamica:
+https://community.canvaslms.com/thread/22170-interactive-youtube-transcript
+
+http://terrillthompson.com/blog/713
+
+FUNCIONOU:
+https://stackoverflow.com/questions/14061195/how-to-get-transcript-in-youtube-api-v3
+
+Método interessante, mas nao funcionou
+https://www.labnol.org/internet/transcribe-video-to-text/28914/
+
+
+
+EXEMPLO:
+https://www.youtube.com/watch?v= WzBe69DWuoc

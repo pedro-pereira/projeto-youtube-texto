@@ -5,14 +5,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Arquivo {
-
-	public static void main(String[] args) {
-		String conteudo = ler("captionFile.srt");
-		escrever("d:\\tabuada.txt", conteudo);
-	}
 	
+	public static List<String> lista;
+
 	public static String ler(String nomeDoArquivo) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(nomeDoArquivo));
@@ -35,6 +34,28 @@ public class Arquivo {
 		return "";
 	}
 	
+	
+	public static List<String> geraLista(String nomeDoArquivo) {
+		List<String> retorno  = null;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(nomeDoArquivo));
+			String linha;
+
+			retorno = new ArrayList<String>();
+			
+			while ((linha = br.readLine()) != null) {
+				retorno.add(linha);
+			}
+
+			br.close();
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return retorno;
+	}
+	
 	public static void escrever(String nomeDoArquivo, String conteudo) {
 		try {
 			FileWriter arq = new FileWriter(nomeDoArquivo);
@@ -53,4 +74,11 @@ public class Arquivo {
 		}
 		return false;
 	}
+	
+	/*
+	public static void main(String[] args) {
+		String conteudo = ler("captionFile.srt");
+		escrever("d:\\tabuada.txt", conteudo);
+	}
+	*/
 }

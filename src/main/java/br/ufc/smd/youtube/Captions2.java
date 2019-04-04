@@ -150,14 +150,7 @@ public class Captions2 {
 			t.printStackTrace();
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-
-		geraYoutubeComOAuth2();
-		executaAcaoParaCaptions();
-	}
-	
+		
 	/**
 	 * Downloads a caption track for a YouTube video. (captions.download)
 	 *
@@ -165,7 +158,7 @@ public class Captions2 {
 	 * 					In a caption resource, the id property specifies the caption track's ID.
 	 * @throws IOException
 	 */
-	private static void downloadCaption(String captionId) throws IOException {
+	public static void downloadCaption(String captionId) throws IOException {
 		// Create an API request to the YouTube Data API's captions.download method to download an existing caption track.
 		Download captionDownload = youtube.captions().download(captionId).setTfmt(SRT);
 
@@ -327,6 +320,24 @@ public class Captions2 {
 			System.out.println("\n-------------------------------------------------------------\n");
 		}
 		return captions;
+	}
+	
+	/**
+	 * Returns a list of caption tracks. (captions.listCaptions)
+	 *
+	 * @param videoId The videoId parameter instructs the API to return the caption tracks for the video specified by the video id.
+	 * @throws IOException
+	 */
+	public static String capturaIdPrimeiroTrack(String videoId) {
+		try {
+			// Call the YouTube Data API's captions.list method to retrieve video caption tracks.
+			CaptionListResponse captionListResponse = youtube.captions().list("snippet", videoId).execute();
+			List<Caption> captions = captionListResponse.getItems();
+			return captions.get(0).getId();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	/**
@@ -544,6 +555,13 @@ public class Captions2 {
 
 		return action;
 	}
+	
+	/*
+	public static void main(String[] args) {
+		geraYoutubeComOAuth2();
+		executaAcaoParaCaptions();
+	}
+	*/
 
 	public enum Action {
 		UPLOAD, LIST, UPDATE, DOWNLOAD, DELETE, ALL

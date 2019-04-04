@@ -16,6 +16,7 @@ package br.ufc.smd.youtube;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -39,9 +40,9 @@ public class Search2 {
 	 */
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 12;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
 	
-	public static List<String> listaDeVideos;
+	public static List<String> listaDeVideos = new ArrayList<String>();
 	
 	public static String codigoProximaPagina;
 
@@ -81,6 +82,57 @@ public class Search2 {
 	}
 	
 	/**
+	 * @param proximaPagina
+	 */
+	public static void gerarListaDeVideos(String idCanal) {
+		try {
+			// Define the API request for retrieving search results.
+			YouTube.Search.List search = youtube.search().list("id, snippet");
+
+			// Set your developer key from the Google Developers Console for non-authenticated requests.
+			search.setKey(apiKey);
+			// 148 Videos
+			search.setChannelId(idCanal);
+
+			// Restrict the search results to only include videos. 
+			// See:https://developers.google.com/youtube/v3/docs/search/list#type
+			// search.setType("channel,video");
+
+			// To increase efficiency, only retrieve the fields that the application uses.
+			search.setFields("nextPageToken,items(id/kind,id/videoId)");
+			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+
+			// Call the API and print results.
+			SearchListResponse searchResponse;
+			List<SearchResult> searchResultList = null;
+		
+			searchResponse = search.execute();
+			searchResultList = searchResponse.getItems();
+
+			// Trabalho o retorno para gerar a lista de videos
+			Iterator<SearchResult> iteratorSearchResults = searchResultList.iterator();
+			if (!iteratorSearchResults.hasNext()) {
+				System.out.println(" There aren't any results for your query.");
+				return;
+			} else {
+				while (iteratorSearchResults.hasNext()) {
+					SearchResult singleVideo = iteratorSearchResults.next();
+					ResourceId rId = singleVideo.getId();
+
+					// Confirm that the result represents a video. Otherwise, the item will not contain a video ID.
+					if (rId.getKind().equals("youtube#video")) {
+						listaDeVideos.add(rId.getVideoId());
+					}
+				}
+			}
+		} catch (IOException e) {
+			System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause() + " : " + e.getMessage());
+			System.exit(1);
+		}
+	}
+	
+	/**
+	 * Precisa ser melhorado
 	 * @param proximaPagina
 	 */
 	public static void gerarListaDeVideos(String idCanal, String proximaPagina) {
@@ -142,7 +194,7 @@ public class Search2 {
 			System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause() + " : " + e.getMessage());
 			System.exit(1);
 		}
-	}
+	}	
 
 	/*
 	public static void main(String[] args) {

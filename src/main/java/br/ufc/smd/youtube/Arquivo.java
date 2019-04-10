@@ -62,7 +62,6 @@ public class Arquivo {
 			PrintWriter gravarArq = new PrintWriter(arq);
 			gravarArq.printf(conteudo);
 			arq.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

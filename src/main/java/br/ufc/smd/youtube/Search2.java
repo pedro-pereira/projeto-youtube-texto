@@ -91,8 +91,11 @@ public class Search2 {
 
 			// Set your developer key from the Google Developers Console for non-authenticated requests.
 			search.setKey(apiKey);
-			// 148 Videos
 			search.setChannelId(idCanal);
+			search.setType("video");
+			
+			//search.setVideoCaption("closedCaption");
+			//search.setVideoLicense("creativeCommon");
 
 			// Restrict the search results to only include videos. 
 			// See:https://developers.google.com/youtube/v3/docs/search/list#type
@@ -100,7 +103,7 @@ public class Search2 {
 
 			// To increase efficiency, only retrieve the fields that the application uses.
 			search.setFields("nextPageToken,items(id/kind,id/videoId)");
-			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);			
 
 			// Call the API and print results.
 			SearchListResponse searchResponse;

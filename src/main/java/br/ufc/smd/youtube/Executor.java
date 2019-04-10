@@ -69,12 +69,15 @@ public class Executor {
 				
 				case DOWNLOAD_TRACK:
 					// -------------------- MOMENTO #3 - Gerar arquivos de transcricao --------------------
-					List<String> listaDeTracks = Arquivo.geraLista("/tracks/listaDeTracks.txt");
+					
+					Captions2.geraYoutubeComOAuth2();
+					
+					List<String> listaDeTracks = Arquivo.geraLista("listaDeTracks.txt");
 			
 					for(String track: listaDeTracks) {
-						Captions2.downloadCaption(track);
+						Captions2.downloadCaption(track, "tracks/caption_" + track + ".srt");
 					}
-				break;	
+				break;
 				
 				case TRATA_TRACK:
 					FileFilter filter = new FileFilter() {
@@ -82,12 +85,17 @@ public class Executor {
 					        return file.getName().endsWith(".srt");
 					    }
 					};
-					File dir = new File("/tracks");
+					File dir = new File("tracks");
 					File[] files = dir.listFiles(filter);
 					
-					System.out.println(files.length);
+					String conteudo;
+					for (int i = 0; i < files.length; i++) {
+						conteudo = Arquivo.ler("tracks/" + files[i].getName());
+						Arquivo.escrever("tracks/arquivo_tratado_" + i + ".txt", conteudo);
+						conteudo = null;
+					}
 					
-				break;	
+				break;
 			}
 			
 		} catch (IOException e) {

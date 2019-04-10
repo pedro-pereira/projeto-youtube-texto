@@ -54,3 +54,9 @@ https://stackoverflow.com/questions/11485271/google-oauth-2-authorization-error-
 
 
 
+-- Muito uitl para HTTPGET básico
+https://www.programcreek.com/java-api-examples/org.apache.http.client.methods.HttpGet
+https://www.programcreek.com/java-api-examples/?code=daishicheng/outcomes/outcomes-master/my-tools/src/test/java/com/otms/api/service/TestHttpCore.java
+
+
+

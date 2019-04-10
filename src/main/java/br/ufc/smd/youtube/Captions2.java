@@ -1,5 +1,16 @@
 package br.ufc.smd.youtube;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
+
 /*
  * Copyright (c) 2015 Google Inc.
  *
@@ -21,7 +32,6 @@ import com.google.api.client.googleapis.media.MediaHttpDownloaderProgressListene
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
 import com.google.api.client.http.InputStreamContent;
-
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.Captions.Download;
 import com.google.api.services.youtube.YouTube.Captions.Insert;
@@ -29,19 +39,6 @@ import com.google.api.services.youtube.YouTube.Captions.Update;
 import com.google.api.services.youtube.model.Caption;
 import com.google.api.services.youtube.model.CaptionListResponse;
 import com.google.api.services.youtube.model.CaptionSnippet;
-import com.google.common.collect.Lists;
-
-import br.ufc.smd.youtube.Auth;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.List;
 
 /**
  * This sample creates and manages caption tracks by:
@@ -80,12 +77,13 @@ public class Captions2 {
 	public static void geraYoutubeComOAuth2() {
 		// This OAuth 2.0 access scope allows for full read/write access to the authenticated user's account and requires requests to use an SSL connection.
 		List<String> scopes = 
-				Lists.newArrayList("https://www.googleapis.com/auth/youtube.force-ssl");
-						scopes.add("https://www.googleapis.com/auth/youtubepartner");
-						scopes.add("https://www.googleapis.com/auth/youtube");
-						scopes.add("https://www.googleapis.com/auth/youtube.readonly");
-						scopes.add("https://www.googleapis.com/auth/youtube.upload");
-						scopes.add("https://www.googleapis.com/auth/youtubepartner-channel-audit");
+				Arrays.asList("https://www.googleapis.com/auth/youtube.force-ssl " + 
+						"https://www.googleapis.com/auth/youtubepartner " + 
+						"https://www.googleapis.com/auth/youtube " + 
+						"https://www.googleapis.com/auth/youtube.readonly " + 
+						"https://www.googleapis.com/auth/youtube.upload " + 
+						"https://www.googleapis.com/auth/youtubepartner-channel-audit");
+
 		try {
 			// Authorize the request.
 			Credential credential = Auth.authorize(scopes, "captions");
@@ -117,7 +115,7 @@ public class Captions2 {
 				updateCaption(getCaptionIDFromUser(), getUpdateCaptionFromUser());
 				break;
 			case DOWNLOAD:
-				downloadCaption(getCaptionIDFromUser());
+				downloadCaption(getCaptionIDFromUser(), "tracks/caption_" + getCaptionIDFromUser() + ".srt");
 				break;
 			case DELETE:
 				deleteCaption(getCaptionIDFromUser());
@@ -135,7 +133,7 @@ public class Captions2 {
 					// Retrieve the first uploaded caption track.
 					String firstCaptionId = captions.get(0).getId();
 					updateCaption(firstCaptionId, null);
-					downloadCaption(firstCaptionId);
+					downloadCaption(firstCaptionId, "tracks/caption_" + firstCaptionId + ".srt");
 					deleteCaption(firstCaptionId);
 				}
 			}
@@ -158,7 +156,7 @@ public class Captions2 {
 	 * 					In a caption resource, the id property specifies the caption track's ID.
 	 * @throws IOException
 	 */
-	public static void downloadCaption(String captionId) throws IOException {
+	public static void downloadCaption(String captionId, String nomeDoArquivo) throws IOException {
 		// Create an API request to the YouTube Data API's captions.download method to download an existing caption track.
 		Download captionDownload = youtube.captions().download(captionId).setTfmt(SRT);
 
@@ -194,7 +192,8 @@ public class Captions2 {
 		
 		downloader.setProgressListener(downloadProgressListener);
 
-		OutputStream outputFile = new FileOutputStream("captionFile_" + captionId + ".srt");
+		// OutputStream outputFile = new FileOutputStream("captionFile_" + captionId + ".srt");
+		OutputStream outputFile = new FileOutputStream(nomeDoArquivo);
 		// Download the caption track.
 		captionDownload.executeAndDownloadTo(outputFile);
 	}
@@ -333,7 +332,10 @@ public class Captions2 {
 			// Call the YouTube Data API's captions.list method to retrieve video caption tracks.
 			CaptionListResponse captionListResponse = youtube.captions().list("snippet", videoId).execute();
 			List<Caption> captions = captionListResponse.getItems();
-			return captions.get(0).getId();
+			System.out.println(captions.size());
+			if(captions.size() > 0)
+				return captions.get(0).getId();
+			else return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

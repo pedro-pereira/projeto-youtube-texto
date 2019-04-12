@@ -40,7 +40,7 @@ public class Search2 {
 	 */
 	private static final String PROPERTIES_FILENAME = "youtube.properties";
 
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 50;
 	
 	public static List<String> listaDeVideos = new ArrayList<String>();
 	
@@ -93,6 +93,9 @@ public class Search2 {
 			search.setKey(apiKey);
 			search.setChannelId(idCanal);
 			search.setType("video");
+			search.setVideoDuration("medium");
+			search.setRegionCode("BR");
+			search.setVideoCaption("closedCaption");
 			
 			//search.setVideoCaption("closedCaption");
 			//search.setVideoLicense("creativeCommon");
@@ -115,7 +118,7 @@ public class Search2 {
 			// Trabalho o retorno para gerar a lista de videos
 			Iterator<SearchResult> iteratorSearchResults = searchResultList.iterator();
 			if (!iteratorSearchResults.hasNext()) {
-				System.out.println(" There aren't any results for your query.");
+				System.out.println(" There aren't any results for your query. Canal: " + idCanal);
 				return;
 			} else {
 				while (iteratorSearchResults.hasNext()) {
@@ -125,6 +128,9 @@ public class Search2 {
 					// Confirm that the result represents a video. Otherwise, the item will not contain a video ID.
 					if (rId.getKind().equals("youtube#video")) {
 						listaDeVideos.add(rId.getVideoId());
+						
+						System.out.println("Canal: " + idCanal + " - Video: " + rId.getVideoId());
+						
 					}
 				}
 			}

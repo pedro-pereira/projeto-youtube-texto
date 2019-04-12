@@ -60,7 +60,7 @@ public class Arquivo {
 		try {
 			FileWriter arq = new FileWriter(nomeDoArquivo);
 			PrintWriter gravarArq = new PrintWriter(arq);
-			gravarArq.printf(conteudo);
+			gravarArq.print(conteudo);
 			arq.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,6 +73,29 @@ public class Arquivo {
 		}
 		return false;
 	}
+	
+	public static boolean validaTexto(String nomeDoArquivo) {
+		List<String> palavrasProibidas = new ArrayList<String>();
+		palavrasProibidas.add("(FELIPE)");
+		palavrasProibidas.add("[RISADAS]");
+				palavrasProibidas.add("(BRUNO)");
+						palavrasProibidas.add("[BRUNO RI]");
+								palavrasProibidas.add("[música]");
+										palavrasProibidas.add("[risada]");
+		return false;
+	}
+
+	/*
+	public static void regex(String...strings){
+		String data = "[ffff] ddd dsds [dfdf] [gggg]";
+		String regex = "(\[(\w+)\])+";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(data);
+		while (m.find()) {
+			System.out.println(m.group(2));
+		}
+	}
+	*/
 	
 	/*
 	public static void main(String[] args) {

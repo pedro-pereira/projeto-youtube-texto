@@ -40,11 +40,11 @@ public class Executor2 {
 
 			case GERA_TRACKS:
 				// -------------------- MOMENTO #2 - Gera lista de tracks de caption --------------------
-				
+	
 				new Thread() {
 					@Override
 					public void run() {
-						try {
+						try {	
 							List<String> listaDeVideos = Arquivo.geraLista("listaDeVideos.txt");
 
 							String texto;
@@ -52,12 +52,13 @@ public class Executor2 {
 							for (String video : listaDeVideos) {
 								texto = DIYCaptionsAdapter.obterTexto(video);
 								Arquivo.escrever("tracks/track_" + i + ".txt", texto);
+								System.out.println("Sequencial: " + i + " - Video: " + video);
 								i = i + 1;
-							}
+								texto = null;
+							}						
 						} catch (URISyntaxException e) {
 							e.printStackTrace();
-						}
-						 catch (IOException e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}

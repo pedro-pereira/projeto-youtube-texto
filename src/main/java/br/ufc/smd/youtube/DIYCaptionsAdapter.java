@@ -23,6 +23,7 @@ public class DIYCaptionsAdapter {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
+		/*
 		URI uri = new URIBuilder()
 					.setScheme("https")
 					.setHost("www.diycaptions.com")
@@ -30,7 +31,16 @@ public class DIYCaptionsAdapter {
 					.setParameter("id", idVideo)
 					.setParameter("language", "asr")
 					.build();
+		*/
 		
+		URI uri = new URIBuilder()
+				.setScheme("https")
+				.setHost("www.diycaptions.com")
+				.setPath("/php/get-automatic-captions-as-txt.php")
+				.setParameter("id", idVideo)
+				.setParameter("language", "pt")
+				.build();
+				
 		HttpGet httpget = new HttpGet(uri);
 		CloseableHttpResponse response = httpclient.execute(httpget);
 

@@ -1,6 +1,9 @@
 package br.ufc.smd.youtube;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class Arquivo {
 			
 			while ((linha = br.readLine()) != null) {
 				if (validaLinha(linha)) {
-					System.out.println(linha);
+					// System.out.println(linha);
 					builder.append(linha + " ");
 				}
 			}
@@ -33,7 +36,6 @@ public class Arquivo {
 		}
 		return "";
 	}
-	
 	
 	public static List<String> geraLista(String nomeDoArquivo) {
 		List<String> retorno  = null;
@@ -74,33 +76,21 @@ public class Arquivo {
 		return false;
 	}
 	
-	public static boolean validaTexto(String nomeDoArquivo) {
-		List<String> palavrasProibidas = new ArrayList<String>();
-		palavrasProibidas.add("(FELIPE)");
-		palavrasProibidas.add("[RISADAS]");
-				palavrasProibidas.add("(BRUNO)");
-						palavrasProibidas.add("[BRUNO RI]");
-								palavrasProibidas.add("[música]");
-										palavrasProibidas.add("[risada]");
-		return false;
-	}
-
-	/*
-	public static void regex(String...strings){
-		String data = "[ffff] ddd dsds [dfdf] [gggg]";
-		String regex = "(\[(\w+)\])+";
-		Pattern p = Pattern.compile(regex);
-		Matcher m = p.matcher(data);
-		while (m.find()) {
-			System.out.println(m.group(2));
+	public static String trataTextoDoArquivo(String nomeDoArquivo) {
+		String texto = ler(nomeDoArquivo);
+		texto = texto.replaceAll("\\[.*?\\]","");
+		texto = texto.replaceAll("\\(.*?\\)","");
+		texto = texto.trim().replaceAll("\\s{2,}", " ");
+		System.out.println(texto);
+		try {
+			FileOutputStream arquivoSaida = new FileOutputStream(new File(nomeDoArquivo));
+			arquivoSaida.write(texto.getBytes());
+			arquivoSaida.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return texto;
 	}
-	*/
-	
-	/*
-	public static void main(String[] args) {
-		String conteudo = ler("captionFile.srt");
-		escrever("d:\\tabuada.txt", conteudo);
-	}
-	*/
 }
